@@ -4,7 +4,7 @@ using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 
-namespace TaskTimeTracker
+namespace TEJ.TaskTimeTrackerApp
 {
     public partial class TaskTimeTracker : Form
     {
@@ -301,39 +301,6 @@ namespace TaskTimeTracker
                 + btnAddTask.Top
                 + btnAddTask.Height
                 + 20;
-        }
-    }
-
-    public class TaskTracker
-    {
-        public long TimeSpentInSeconds;
-        public int TaskNumber;
-
-        public Panel TaskPanel;
-        public TextBox TaskDescription;
-        public TextBox TaskTime;
-        public Button ToggleButton;
-        public Button RemoveButton;
-
-        public TaskTracker()
-        {
-            TimeSpentInSeconds = 0;
-            TaskNumber = 1;
-        }
-
-        public void AddSeconds( int seconds )
-        {
-            TimeSpentInSeconds += seconds;
-
-            TimeSpan time = TimeSpan
-                .FromSeconds( TimeSpentInSeconds );
-
-            TaskTime.Text = time.ToString( @"hh\:mm\:ss" );
-        }
-
-        public override string ToString()
-        {
-            return $"Task {TaskNumber} | {TaskDescription.Text}";
         }
     }
 }

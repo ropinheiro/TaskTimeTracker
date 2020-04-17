@@ -1,4 +1,4 @@
-﻿namespace TaskTimeTracker
+﻿namespace TEJ.TaskTimeTrackerApp
 {
     partial class TaskTimeTracker
     {
