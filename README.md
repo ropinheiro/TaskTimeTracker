@@ -1,9 +1,9 @@
-# TaskTimeTracker
+# Task Time Tracker by RMP @ Together - Estamos Juntos
 
 ## Introduction
-Development of a Task Time Tracker application to help me track my time
-in the different tasks I perform in one day, for multiple contexts
-(work, learning, volunteering and personal).
+This application was built to help me tracking my time
+in the different tasks I perform in one day, for multiple contexts.
+Meanwhile, I thought it would be useful for someone else, so, here you have :)
 
 Current features:
 * Add / remove tasks
@@ -14,7 +14,7 @@ Roadmap:
 * Archive / un-archive tasks
 * Log periodic time reports
 * Order tasks by drag-and-drop
-* Manually edit tracked time
+* Manuallt
 
 ## Current Release
 
