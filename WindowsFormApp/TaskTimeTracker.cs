@@ -137,24 +137,12 @@ namespace TaskTimeTracker
             // task to be removed (move them up one position).
             for ( int i = Tasks.Count - 1; i > taskToRemove.TaskNumber - 1; i-- )
             {
-                // TODO: move the task controls to a panel so that them
-                // are easier to remove by removing the panel instead of
-                // each control individually.
                 Tasks[ i ].TaskNumber = Tasks[ i - 1 ].TaskNumber;
-                Tasks[ i ].TaskDescription.Location =
-                    Tasks[ i - 1 ].TaskDescription.Location;
-                Tasks[ i ].TaskTime.Location =
-                    Tasks[ i - 1 ].TaskTime.Location;
-                Tasks[ i ].ToggleButton.Location =
-                    Tasks[ i - 1 ].ToggleButton.Location;
-                Tasks[ i ].RemoveButton.Location =
-                    Tasks[ i - 1 ].RemoveButton.Location;
+                Tasks[ i ].TaskPanel.Location =
+                    Tasks[ i - 1 ].TaskPanel.Location;
             }
 
-            Controls.Remove( taskToRemove.TaskDescription );
-            Controls.Remove( taskToRemove.TaskTime );
-            Controls.Remove( taskToRemove.ToggleButton );
-            Controls.Remove( taskToRemove.RemoveButton );
+            Controls.Remove( taskToRemove.TaskPanel );
             Tasks.Remove( taskToRemove );
 
             AdjustFooter();
@@ -193,10 +181,20 @@ namespace TaskTimeTracker
             int leftmostCoordinate = 10;
             int topmostCoordinate = 50;
 
-            // Construct Task Description control
+            // Construct Panel control
             int topCoordinate = topmostCoordinate +
                 ( ( newTask.TaskNumber - 1 ) * ( lineHeight + verticalSpace ) );
 
+            newTask.TaskPanel = new Panel
+            {
+                Location = new Point( leftmostCoordinate, topCoordinate )
+            };
+
+            // Reset coordinates values as inner Panel's controls follow a local referential
+            leftmostCoordinate = 0;
+            topCoordinate = 0;
+
+            // Construct Task Description control
             newTask.TaskDescription = new TextBox
             {
                 Location = new Point( leftmostCoordinate, topCoordinate ),
@@ -251,12 +249,23 @@ namespace TaskTimeTracker
             newTask.RemoveButton.Click +=
                 new EventHandler( btnRemoveTask_Click );
 
+
+            newTask.TaskPanel.Size = new Size(
+                newTask.RemoveButton.Location.X + newTask.RemoveButton.Size.Width,
+                newTask.RemoveButton.Size.Height + 1 );
+
+            newTask.TaskPanel.Controls.Add( newTask.TaskDescription );
+            newTask.TaskPanel.Controls.Add( newTask.TaskTime );
+            newTask.TaskPanel.Controls.Add( newTask.ToggleButton );
+            newTask.TaskPanel.Controls.Add( newTask.RemoveButton );
+
             // Add new controls to the Form and Task to the list
             Tasks.Add( newTask );
-            Controls.Add( newTask.TaskDescription );
-            Controls.Add( newTask.TaskTime );
-            Controls.Add( newTask.ToggleButton );
-            Controls.Add( newTask.RemoveButton );
+            //Controls.Add( newTask.TaskDescription );
+            //Controls.Add( newTask.TaskTime );
+            //Controls.Add( newTask.ToggleButton );
+            //Controls.Add( newTask.RemoveButton );
+            Controls.Add( newTask.TaskPanel );
 
             AdjustFooter();
         }
@@ -288,8 +297,8 @@ namespace TaskTimeTracker
                 RectangleToScreen( ClientRectangle ).Top - Top;
 
             btnAddTask.Top =
-                lastTask.TaskDescription.Top
-                + lastTask.TaskDescription.Height
+                lastTask.TaskPanel.Top
+                + lastTask.TaskPanel.Height
                 + 10;
 
             // Adjust Form's height to the contents
@@ -305,6 +314,7 @@ namespace TaskTimeTracker
         public long TimeSpentInSeconds;
         public int TaskNumber;
 
+        public Panel TaskPanel;
         public TextBox TaskDescription;
         public TextBox TaskTime;
         public Button ToggleButton;
