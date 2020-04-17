@@ -67,7 +67,7 @@
             this.btnAddTask.TabIndex = 1;
             this.btnAddTask.Text = "Add";
             this.btnAddTask.UseVisualStyleBackColor = true;
-            this.btnAddTask.Click += new System.EventHandler(this.btnAddTask_Click);
+            this.btnAddTask.Click += new System.EventHandler(this.AddTask_Click);
             // 
             // TaskTimeTracker
             // 
