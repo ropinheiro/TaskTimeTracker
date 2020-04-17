@@ -3,8 +3,14 @@ using System.Windows.Forms;
 
 namespace TEJ.TaskTimeTrackerApp
 {
+    /// <summary>
+    /// The part responsible for the Task's tracking logic.
+    /// Should NOT have anything regarding e.g. UI rendering.
+    /// </summary>
     public class TaskTracker
     {
+        // TODO: move Task UI stuff to TaskControl.
+
         public long TimeSpentInSeconds;
         public int TaskNumber;
 
