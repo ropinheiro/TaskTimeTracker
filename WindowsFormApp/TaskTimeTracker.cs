@@ -8,9 +8,9 @@ namespace TEJ.TaskTimeTrackerApp
 {
     public partial class TaskTimeTracker : Form
     {
-        public List<TaskTracker> Tasks = new List<TaskTracker>();
+        public List<Task> Tasks = new List<Task>();
 
-        public TaskTracker CurrentTask;
+        public Task CurrentTask;
 
         public TaskTimeTracker()
         {
@@ -25,7 +25,7 @@ namespace TEJ.TaskTimeTrackerApp
 
             if ( tmrTaskTimer.Enabled )
             {
-                CurrentTask.TaskTime.BackColor = Color.Khaki;
+                CurrentTask.Tracker.TaskTime.BackColor = Color.Khaki;
 
                 if ( IsSameTask( clickedButton ) )
                 {
@@ -48,21 +48,21 @@ namespace TEJ.TaskTimeTrackerApp
             if ( CurrentTask == null )
                 return false;
 
-            return clickedButton == CurrentTask.ToggleButton;
+            return clickedButton == CurrentTask.Tracker.ToggleButton;
         }
 
         private void SetCurrentTaskByClickedButton( Button clickedButton )
         {
             CurrentTask = GetTaskByClickedButton( clickedButton );
-            CurrentTask.TaskTime.BackColor = Color.LawnGreen;
+            CurrentTask.Tracker.TaskTime.BackColor = Color.LawnGreen;
         }
 
-        private TaskTracker GetTaskByClickedButton( Button clickedButton )
+        private Task GetTaskByClickedButton( Button clickedButton )
         {
-            foreach ( TaskTracker task in Tasks )
+            foreach ( Task task in Tasks )
             {
-                if ( clickedButton == task.ToggleButton
-                    || clickedButton == task.RemoveButton )
+                if ( clickedButton == task.Tracker.ToggleButton
+                    || clickedButton == task.Tracker.RemoveButton )
                 {
                     return task;
                 }
@@ -88,17 +88,17 @@ namespace TEJ.TaskTimeTrackerApp
 
         private void TaskTimerEventProcessor( object sender, EventArgs e )
         {
-            CurrentTask.AddSeconds( 1 );
+            CurrentTask.Tracker.AddSeconds( 1 );
         }
 
         private void btnRemoveTask_Click( object sender, EventArgs e )
         {
-            TaskTracker taskToRemove =
+            Task taskToRemove =
                 GetTaskByClickedButton( (Button)sender );
 
             // TODO: move the limit elsewhere (e.g. contants? Configuration?)
             DialogResult confirmResult = MessageBox.Show(
-                $"Remove task '{taskToRemove.TaskDescription.Text}'?",
+                $"Remove task '{taskToRemove.Tracker.TaskDescription.Text}'?",
                 "Are you sure?",
                 MessageBoxButtons.YesNo );
 
@@ -108,18 +108,18 @@ namespace TEJ.TaskTimeTrackerApp
             }
         }
 
-        private void RemoveTask( TaskTracker taskToRemove )
+        private void RemoveTask( Task taskToRemove )
         {
             // Adjust positions of all tasks coming after the
             // task to be removed (move them up one position).
-            for ( int i = Tasks.Count - 1; i > taskToRemove.TaskNumber - 1; i-- )
+            for ( int i = Tasks.Count - 1; i > taskToRemove.Tracker.TaskNumber - 1; i-- )
             {
-                Tasks[ i ].TaskNumber = Tasks[ i - 1 ].TaskNumber;
-                Tasks[ i ].TaskPanel.Location =
-                    Tasks[ i - 1 ].TaskPanel.Location;
+                Tasks[ i ].Tracker.TaskNumber = Tasks[ i - 1 ].Tracker.TaskNumber;
+                Tasks[ i ].Tracker.TaskPanel.Location =
+                    Tasks[ i - 1 ].Tracker.TaskPanel.Location;
             }
 
-            Controls.Remove( taskToRemove.TaskPanel );
+            Controls.Remove( taskToRemove.Tracker.TaskPanel );
             Tasks.Remove( taskToRemove );
 
             AdjustFooter();
@@ -237,7 +237,7 @@ namespace TEJ.TaskTimeTrackerApp
 
             // Add new Panel to the Form and Task to the list
             Controls.Add( newTask.TaskPanel );
-            Tasks.Add( newTask );
+            Tasks.Add( new Task() { Tracker = newTask } );
 
             AdjustFooter();
         }
@@ -247,7 +247,7 @@ namespace TEJ.TaskTimeTrackerApp
             if ( Tasks == null || Tasks.Count == 0 )
                 return 1;
 
-            return Tasks.Last().TaskNumber + 1;
+            return Tasks.Last().Tracker.TaskNumber + 1;
         }
 
         private int GetCurrentTabIndex()
@@ -255,22 +255,22 @@ namespace TEJ.TaskTimeTrackerApp
             if ( Tasks == null || Tasks.Count == 0 )
                 return 0;
 
-            return Tasks.Last().RemoveButton.TabIndex;
+            return Tasks.Last().Tracker.RemoveButton.TabIndex;
         }
 
         private void AdjustFooter()
         {
             // TODO: move the magic numbers to constants
 
-            TaskTracker lastTask = Tasks.Last();
+            Task lastTask = Tasks.Last();
 
             // Adjust Add Button to be after last Task
             int titleHeight =
                 RectangleToScreen( ClientRectangle ).Top - Top;
 
             btnAddTask.Top =
-                lastTask.TaskPanel.Top
-                + lastTask.TaskPanel.Height
+                lastTask.Tracker.TaskPanel.Top
+                + lastTask.Tracker.TaskPanel.Height
                 + 10;
 
             // Adjust Form's height to the contents
