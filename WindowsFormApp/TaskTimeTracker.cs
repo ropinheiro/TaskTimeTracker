@@ -73,36 +73,13 @@ namespace TEJ.TaskTimeTrackerApp
 
         private void InitTasks()
         {
-            //List<string> taskDescriptions = new List<string>
-            //{
-            //    string.Empty, string.Empty, string.Empty, string.Empty
-            //};
-
-            //List<string> taskDescriptions = new List<string>
-            //{
-            //    "Talks with partners",
-            //    "#administrative stuff",
-            //    "SPV: tickets",
-            //    "SPV: customer / team management",
-            //    "Learning: JIRA courses",
-            //    "Personal: time with daughters",
-            //    string.Empty,
-            //    string.Empty,
-            //    string.Empty,
-            //    string.Empty,
-            //};
-
             List<string> taskDescriptions = new List<string>
             {
-                "1",
-                "2",
-                "3",
-                "4",
-                "5",
-                "6",
-                "7",
-                "8",
-                "9",
+                "Task 1",
+                "Task 2",
+                "Task 3",
+                "Task 4",
+                "Task 5",
             };
 
             foreach ( string description in taskDescriptions )
