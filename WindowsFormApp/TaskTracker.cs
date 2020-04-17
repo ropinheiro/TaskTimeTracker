@@ -1,7 +1,4 @@
-﻿using System;
-using System.Windows.Forms;
-
-namespace TEJ.TaskTimeTrackerApp
+﻿namespace TEJ.TaskTimeTrackerApp
 {
     /// <summary>
     /// The part responsible for the Task's tracking logic.
@@ -9,36 +6,32 @@ namespace TEJ.TaskTimeTrackerApp
     /// </summary>
     public class TaskTracker
     {
-        // TODO: move Task UI stuff to TaskControl.
-
-        public long TimeSpentInSeconds;
+        /// <summary>
+        /// The Task's number (used like a unique identifier).
+        /// </summary>
         public int TaskNumber;
 
-        public Panel TaskPanel;
-        public TextBox TaskDescription;
-        public TextBox TaskTime;
-        public Button ToggleButton;
-        public Button RemoveButton;
+        /// <summary>
+        /// Amount of time spent so far, in seconds.
+        /// </summary>
+        public long TimeSpentInSeconds;
 
-        public TaskTracker()
+        public TaskTracker( int taskNumber )
         {
             TimeSpentInSeconds = 0;
-            TaskNumber = 1;
+            TaskNumber = taskNumber;
         }
 
-        public void AddSeconds( int seconds )
+        /// <summary>
+        /// Adds a given amount of seconds to this Task's time spent.
+        /// </summary>
+        /// <param name="seconds">A given amount of seconds.</param>
+        /// <returns></returns>
+        public long AddSeconds( int seconds )
         {
             TimeSpentInSeconds += seconds;
 
-            TimeSpan time = TimeSpan
-                .FromSeconds( TimeSpentInSeconds );
-
-            TaskTime.Text = time.ToString( @"hh\:mm\:ss" );
-        }
-
-        public override string ToString()
-        {
-            return $"Task {TaskNumber} | {TaskDescription.Text}";
+            return TimeSpentInSeconds;
         }
     }
 }

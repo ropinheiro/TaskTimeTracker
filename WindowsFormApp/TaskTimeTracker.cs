@@ -52,7 +52,7 @@ namespace TEJ.TaskTimeTrackerApp
 
             // TODO: move the limit elsewhere (e.g. contants? Configuration?)
             DialogResult confirmResult = MessageBox.Show(
-                $"Remove task '{taskToRemove.Tracker.TaskDescription.Text}'?",
+                $"Remove task '{taskToRemove.UI.TaskDescription.Text}'?",
                 "Are you sure?",
                 MessageBoxButtons.YesNo );
 
@@ -73,7 +73,7 @@ namespace TEJ.TaskTimeTrackerApp
 
             if ( tmrTaskTimer.Enabled )
             {
-                Manager.CurrentTask.Tracker.TaskTime.BackColor = Color.Khaki;
+                Manager.CurrentTask.UI.TaskTime.BackColor = Color.Khaki;
 
                 if ( Manager.ButtonBelongsToTheCurrentTask( clickedButton ) )
                 {

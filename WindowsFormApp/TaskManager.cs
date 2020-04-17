@@ -59,10 +59,7 @@ namespace TEJ.TaskTimeTrackerApp
         public void AddNewTask( string taskDescription )
         {
             // Base task information
-            TaskTracker newTask = new TaskTracker()
-            {
-                TaskNumber = GetNextTaskNumber()
-            };
+            Task newTask = new Task( GetNextTaskNumber() );
             int tabIndex = GetCurrentTabIndex();
 
             // TODO: move this somewhere (e.g. to constants?)
@@ -78,9 +75,9 @@ namespace TEJ.TaskTimeTrackerApp
 
             // Construct Panel control
             int topCoordinate = topmostCoordinate +
-                ( ( newTask.TaskNumber - 1 ) * ( lineHeight + verticalSpace ) );
+                ( ( newTask.Tracker.TaskNumber - 1 ) * ( lineHeight + verticalSpace ) );
 
-            newTask.TaskPanel = new Panel
+            newTask.UI.TaskPanel = new Panel
             {
                 Location = new Point( leftmostCoordinate, topCoordinate )
             };
@@ -90,7 +87,7 @@ namespace TEJ.TaskTimeTrackerApp
             topCoordinate = 0;
 
             // Construct Task Description control
-            newTask.TaskDescription = new TextBox
+            newTask.UI.TaskDescription = new TextBox
             {
                 Location = new Point( leftmostCoordinate, topCoordinate ),
                 Size = new Size( descriptionWidth, lineHeight ),
@@ -102,7 +99,7 @@ namespace TEJ.TaskTimeTrackerApp
             int taskTimeLeftCoordinate =
                 leftmostCoordinate + descriptionWidth + horizontalSpace;
 
-            newTask.TaskTime = new TextBox
+            newTask.UI.TaskTime = new TextBox
             {
                 ReadOnly = true,
                 BackColor = Color.LightCoral,
@@ -118,7 +115,7 @@ namespace TEJ.TaskTimeTrackerApp
             int buttonLeftCoordinate =
                 taskTimeLeftCoordinate + timeWidth + horizontalSpace;
 
-            newTask.ToggleButton = new Button
+            newTask.UI.ToggleButton = new Button
             {
                 Location = new Point( buttonLeftCoordinate, topCoordinate ),
                 Size = new Size( buttonWidth, lineHeight ),
@@ -126,14 +123,14 @@ namespace TEJ.TaskTimeTrackerApp
                 Text = "GO",
                 UseVisualStyleBackColor = true
             };
-            newTask.ToggleButton.Click +=
+            newTask.UI.ToggleButton.Click +=
                 new EventHandler( Form.ToogleTimer_Click );
 
             // Construct Remove Button control
             int removeButtonLeftCoordinate =
                 buttonLeftCoordinate + buttonWidth + horizontalSpace;
 
-            newTask.RemoveButton = new Button
+            newTask.UI.RemoveButton = new Button
             {
                 Location = new Point( removeButtonLeftCoordinate, topCoordinate ),
                 Size = new Size( removeButtonWidth, lineHeight ),
@@ -141,24 +138,17 @@ namespace TEJ.TaskTimeTrackerApp
                 Text = "DEL",
                 UseVisualStyleBackColor = true
             };
-            newTask.RemoveButton.Click +=
+            newTask.UI.RemoveButton.Click +=
                 new EventHandler( Form.RemoveTask_Click );
 
             // Update Panel with inner contents
-            newTask.TaskPanel.Size = new Size(
-                newTask.RemoveButton.Location.X + newTask.RemoveButton.Size.Width,
-                // The +1 is for an extra pixel to accomodate the Panel margin
-                newTask.RemoveButton.Size.Height + 1 );
-            newTask.TaskPanel.Controls.Add( newTask.TaskDescription );
-            newTask.TaskPanel.Controls.Add( newTask.TaskTime );
-            newTask.TaskPanel.Controls.Add( newTask.ToggleButton );
-            newTask.TaskPanel.Controls.Add( newTask.RemoveButton );
+            newTask.UI.AdjustPanel();
 
             // Add new Task to the list
-            Tasks.Add( new Task() { Tracker = newTask } );
+            Tasks.Add( newTask );
 
             // Update UI
-            Form.Controls.Add( newTask.TaskPanel );
+            Form.Controls.Add( newTask.UI.TaskPanel );
             Form.AdjustFooter();
         }
 
@@ -173,11 +163,11 @@ namespace TEJ.TaskTimeTrackerApp
             for ( int i = Tasks.Count - 1; i > taskToRemove.Tracker.TaskNumber - 1; i-- )
             {
                 Tasks[ i ].Tracker.TaskNumber = Tasks[ i - 1 ].Tracker.TaskNumber;
-                Tasks[ i ].Tracker.TaskPanel.Location =
-                    Tasks[ i - 1 ].Tracker.TaskPanel.Location;
+                Tasks[ i ].UI.TaskPanel.Location =
+                    Tasks[ i - 1 ].UI.TaskPanel.Location;
             }
 
-            Form.Controls.Remove( taskToRemove.Tracker.TaskPanel );
+            Form.Controls.Remove( taskToRemove.UI.TaskPanel );
             Tasks.Remove( taskToRemove );
 
             Form.AdjustFooter();
@@ -230,8 +220,8 @@ namespace TEJ.TaskTimeTrackerApp
                 return topmostCoordinate;
             else
                 return
-                    lastTask.Tracker.TaskPanel.Top
-                    + lastTask.Tracker.TaskPanel.Height;
+                    lastTask.UI.TaskPanel.Top
+                    + lastTask.UI.TaskPanel.Height;
         }
 
         /// <summary>
@@ -244,7 +234,7 @@ namespace TEJ.TaskTimeTrackerApp
             if ( CurrentTask == null )
                 return false;
 
-            return clickedButton == CurrentTask.Tracker.ToggleButton;
+            return clickedButton == CurrentTask.UI.ToggleButton;
         }
 
         /// <summary>
@@ -257,8 +247,8 @@ namespace TEJ.TaskTimeTrackerApp
         {
             foreach ( Task task in Tasks )
             {
-                if ( clickedButton == task.Tracker.ToggleButton
-                    || clickedButton == task.Tracker.RemoveButton )
+                if ( clickedButton == task.UI.ToggleButton
+                    || clickedButton == task.UI.RemoveButton )
                 {
                     return task;
                 }
@@ -274,7 +264,7 @@ namespace TEJ.TaskTimeTrackerApp
         public void SetCurrentTaskByClickedButton( Button clickedButton )
         {
             CurrentTask = GetTaskByClickedButton( clickedButton );
-            CurrentTask.Tracker.TaskTime.BackColor = Color.LawnGreen;
+            CurrentTask.UI.TaskTime.BackColor = Color.LawnGreen;
         }
 
         /// <summary>
@@ -283,7 +273,7 @@ namespace TEJ.TaskTimeTrackerApp
         /// <param name="seconds">A given number of seconds</param>
         public void AddSeconds( int seconds )
         {
-            CurrentTask.Tracker.AddSeconds( seconds );
+            CurrentTask.AddSeconds( seconds );
         }
 
         public bool HasTooManyTasks()
@@ -316,7 +306,7 @@ namespace TEJ.TaskTimeTrackerApp
             if ( Tasks == null || Tasks.Count == 0 )
                 return 0;
 
-            return Tasks.Last().Tracker.RemoveButton.TabIndex;
+            return Tasks.Last().UI.RemoveButton.TabIndex;
         }
 
         #endregion Helpers
