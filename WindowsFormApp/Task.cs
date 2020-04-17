@@ -8,11 +8,11 @@
         /// <summary>
         /// The part responsible for the Task's UI rendering.
         /// </summary>
-        public TaskControl TaskControl;
+        public TaskControl UI;
 
         /// <summary>
         /// The part responsible for the Task's tracking logic.
         /// </summary>
-        public TaskTracker TaskTracker;
+        public TaskTracker Tracker;
     }
 }
