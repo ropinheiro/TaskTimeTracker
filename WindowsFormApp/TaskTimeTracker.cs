@@ -249,23 +249,18 @@ namespace TaskTimeTracker
             newTask.RemoveButton.Click +=
                 new EventHandler( btnRemoveTask_Click );
 
-
+            // Update Panel with inner contents
             newTask.TaskPanel.Size = new Size(
                 newTask.RemoveButton.Location.X + newTask.RemoveButton.Size.Width,
                 newTask.RemoveButton.Size.Height + 1 );
-
             newTask.TaskPanel.Controls.Add( newTask.TaskDescription );
             newTask.TaskPanel.Controls.Add( newTask.TaskTime );
             newTask.TaskPanel.Controls.Add( newTask.ToggleButton );
             newTask.TaskPanel.Controls.Add( newTask.RemoveButton );
 
-            // Add new controls to the Form and Task to the list
-            Tasks.Add( newTask );
-            //Controls.Add( newTask.TaskDescription );
-            //Controls.Add( newTask.TaskTime );
-            //Controls.Add( newTask.ToggleButton );
-            //Controls.Add( newTask.RemoveButton );
+            // Add new Panel to the Form and Task to the list
             Controls.Add( newTask.TaskPanel );
+            Tasks.Add( newTask );
 
             AdjustFooter();
         }
