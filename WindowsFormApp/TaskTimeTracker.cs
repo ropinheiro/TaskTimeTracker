@@ -14,6 +14,13 @@ namespace TEJ.TaskTimeTrackerApp
         /// </summary>
         private readonly TaskManager Manager;
 
+        /// <summary>
+        /// Try not to save too much in a short timespan.
+        /// TODO: move this to a constants file.
+        /// </summary>
+        private readonly int SecondsBetweenSavings = 5;
+        private int SecondsSinceLastSave = 0;
+
         public TaskTimeTracker()
         {
             InitializeComponent();
@@ -99,6 +106,13 @@ namespace TEJ.TaskTimeTrackerApp
         private void TaskTimerEventProcessor( object sender, EventArgs e )
         {
             Manager.AddSeconds( 1 );
+
+            SecondsSinceLastSave++;
+            if ( SecondsSinceLastSave > SecondsBetweenSavings )
+            {
+                SecondsSinceLastSave = 0;
+                FileManager.SaveData( Manager.Tasks );
+            }
         }
 
         /// <summary>
