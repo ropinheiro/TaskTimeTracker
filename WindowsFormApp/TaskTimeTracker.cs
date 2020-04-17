@@ -98,8 +98,8 @@ namespace TEJ.TaskTimeTrackerApp
 
             // TODO: move the limit elsewhere (e.g. contants? Configuration?)
             DialogResult confirmResult = MessageBox.Show(
-                $"Are you sure to task '{taskToRemove.TaskDescription.Text}'",
-                "Confirmation",
+                $"Remove task '{taskToRemove.TaskDescription.Text}'?",
+                "Are you sure?",
                 MessageBoxButtons.YesNo );
 
             if ( confirmResult == DialogResult.Yes )
