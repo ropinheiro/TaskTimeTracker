@@ -84,6 +84,10 @@ namespace TEJ.TaskTimeTrackerApp
                 if ( Manager.ButtonBelongsToTheCurrentTask( clickedButton ) )
                 {
                     tmrTaskTimer.Stop();
+
+                    // Do this when stopping the Task tracking timer to ensure
+                    // that a last file save occurs with the current data.
+                    SaveFile();
                 }
                 else
                 {
