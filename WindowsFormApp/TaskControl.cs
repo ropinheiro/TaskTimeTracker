@@ -48,33 +48,19 @@ namespace TEJ.TaskTimeTrackerApp
             int buttonWidth = 50;
             int removeButtonWidth = 50;
             int lineHeight = 30;
-            int verticalSpace = 10;
             int horizontalSpace = 5;
-            int leftmostCoordinate = 10;
-            int topmostCoordinate = 50;
 
             // ----------------------------------------------------------------
             // Construct Panel control
             // ----------------------------------------------------------------
-            int topCoordinate = topmostCoordinate +
-                ( ( taskNumber - 1 ) * ( lineHeight + verticalSpace ) );
-
-            TaskPanel = new Panel
-            {
-                Location = new Point( leftmostCoordinate, topCoordinate ),
-                TabIndex = taskNumber
-            };
-
-            // Reset coordinates values as inner Panel's controls follow a local referential
-            leftmostCoordinate = 0;
-            topCoordinate = 0;
+            ConfigurePanelByTaskNumber( taskNumber );
 
             // ----------------------------------------------------------------
             // Construct Task Description control
             // ----------------------------------------------------------------
             TaskDescription = new TextBox
             {
-                Location = new Point( leftmostCoordinate, topCoordinate ),
+                Location = new Point( 0, 0 ),
                 Size = new Size( descriptionWidth, lineHeight ),
                 Text = taskDescription,
                 TabIndex = 0
@@ -86,14 +72,14 @@ namespace TEJ.TaskTimeTrackerApp
             // Construct Task Time control
             // ----------------------------------------------------------------
             int taskTimeLeftCoordinate =
-                leftmostCoordinate + descriptionWidth + horizontalSpace;
+                descriptionWidth + horizontalSpace;
 
             TaskTime = new TextBox
             {
                 ReadOnly = true,
                 BackColor = Color.LightCoral,
                 ForeColor = Color.Black,
-                Location = new Point( taskTimeLeftCoordinate, topCoordinate ),
+                Location = new Point( taskTimeLeftCoordinate, 0 ),
                 Size = new Size( timeWidth, lineHeight ),
                 TabIndex = 1,
                 Text = GetFormattedTime( 0 ),
@@ -108,7 +94,7 @@ namespace TEJ.TaskTimeTrackerApp
 
             ToggleButton = new Button
             {
-                Location = new Point( buttonLeftCoordinate, topCoordinate ),
+                Location = new Point( buttonLeftCoordinate, 0 ),
                 Size = new Size( buttonWidth, lineHeight ),
                 TabIndex = 2,
                 Text = "GO",
@@ -125,7 +111,7 @@ namespace TEJ.TaskTimeTrackerApp
 
             RemoveButton = new Button
             {
-                Location = new Point( removeButtonLeftCoordinate, topCoordinate ),
+                Location = new Point( removeButtonLeftCoordinate, 0 ),
                 Size = new Size( removeButtonWidth, lineHeight ),
                 TabIndex = 3,
                 Text = "DEL",
@@ -177,6 +163,29 @@ namespace TEJ.TaskTimeTrackerApp
             TaskPanel.Controls.Add( TaskTime );
             TaskPanel.Controls.Add( ToggleButton );
             TaskPanel.Controls.Add( RemoveButton );
+        }
+
+        /// <summary>
+        /// Creates or updates the Panel's position and tab index according
+        /// to the given Task number.
+        /// </summary>
+        /// <param name="taskNumber">A given Task number.</param>
+        public void ConfigurePanelByTaskNumber( int taskNumber )
+        {
+            // TODO: move this somewhere (e.g. to constants?)
+            int lineHeight = 30;
+            int verticalSpace = 10;
+            int leftmostCoordinate = 10;
+            int topmostCoordinate = 50;
+
+            int topCoordinate = topmostCoordinate +
+                ( ( taskNumber - 1 ) * ( lineHeight + verticalSpace ) );
+
+            if ( TaskPanel == null )
+                TaskPanel = new Panel();
+
+            TaskPanel.Location = new Point( leftmostCoordinate, topCoordinate );
+            TaskPanel.TabIndex = taskNumber;
         }
     }
 }

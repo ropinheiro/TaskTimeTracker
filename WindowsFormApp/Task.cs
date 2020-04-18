@@ -21,6 +21,7 @@ namespace TEJ.TaskTimeTrackerApp
 
         /// <summary>
         /// The Task's number (used like a unique identifier).
+        /// Changing it affects the position of the Task's Panel in the UI.
         /// </summary>
         public int TaskNumber
         {
@@ -31,7 +32,9 @@ namespace TEJ.TaskTimeTrackerApp
             set
             {
                 _TaskNumber = value;
-                // TODO: update the Task Panel's position accordingly
+
+                if ( UI != null )
+                    UI.ConfigurePanelByTaskNumber( _TaskNumber );
             }
         }
         private int _TaskNumber;

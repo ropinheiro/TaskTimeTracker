@@ -79,13 +79,13 @@ namespace TEJ.TaskTimeTrackerApp
             for ( int i = Tasks.Count - 1; i > taskToRemove.TaskNumber - 1; i-- )
             {
                 Tasks[ i ].TaskNumber = Tasks[ i - 1 ].TaskNumber;
-                Tasks[ i ].UI.TaskPanel.Location =
-                    Tasks[ i - 1 ].UI.TaskPanel.Location;
             }
 
-            Form.Controls.Remove( taskToRemove.UI.TaskPanel );
+            // Remove the Task from the Task list and from the UI.
             Tasks.Remove( taskToRemove );
+            Form.Controls.Remove( taskToRemove.UI.TaskPanel );
 
+            // Shrink the Form now that we have one less Task.
             Form.AdjustFooter();
         }
 
