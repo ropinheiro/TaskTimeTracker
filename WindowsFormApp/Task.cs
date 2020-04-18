@@ -1,4 +1,6 @@
-﻿namespace TEJ.TaskTimeTrackerApp
+﻿using System.Reflection.Metadata.Ecma335;
+
+namespace TEJ.TaskTimeTrackerApp
 {
     /// <summary>
     /// Abstractly describes a Task.
@@ -37,11 +39,13 @@
         #endregion Task fields
 
 
-        public Task( int taskNumber )
+        public Task( int number, string description, TaskTimeTracker form )
         {
-            TaskNumber = taskNumber;
+            TaskNumber = number;
+
             Tracker = new TaskTracker();
-            UI = new TaskControl();
+
+            UI = new TaskControl( number, description, form );
         }
 
         /// <summary>

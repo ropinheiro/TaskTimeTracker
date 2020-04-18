@@ -171,6 +171,7 @@ namespace TEJ.TaskTimeTrackerApp
 
             btnAddTask.Top =
                 Manager.LastVerticalPixel() + 10;
+            btnAddTask.TabIndex = Manager.Tasks.Count() + 1;
 
             // Adjust Form's height to the contents
             Height = titleHeight

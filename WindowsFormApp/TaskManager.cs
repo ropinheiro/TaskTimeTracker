@@ -58,95 +58,9 @@ namespace TEJ.TaskTimeTrackerApp
         /// <param name="taskDescription">A given Task descripiton</param>
         public void AddNewTask( string taskDescription )
         {
-            // Base task information
-            Task newTask = new Task( GetNextTaskNumber() );
-            int tabIndex = GetCurrentTabIndex();
+            Task newTask =
+                new Task( GetNextTaskNumber(), taskDescription, Form );
 
-            // TODO: move this somewhere (e.g. to constants?)
-            int descriptionWidth = 450;
-            int timeWidth = 95;
-            int buttonWidth = 50;
-            int removeButtonWidth = 50;
-            int lineHeight = 30;
-            int verticalSpace = 10;
-            int horizontalSpace = 5;
-            int leftmostCoordinate = 10;
-            int topmostCoordinate = 50;
-
-            // Construct Panel control
-            int topCoordinate = topmostCoordinate +
-                ( ( newTask.TaskNumber - 1 ) * ( lineHeight + verticalSpace ) );
-
-            newTask.UI.TaskPanel = new Panel
-            {
-                Location = new Point( leftmostCoordinate, topCoordinate )
-            };
-
-            // Reset coordinates values as inner Panel's controls follow a local referential
-            leftmostCoordinate = 0;
-            topCoordinate = 0;
-
-            // Construct Task Description control
-            newTask.UI.TaskDescription = new TextBox
-            {
-                Location = new Point( leftmostCoordinate, topCoordinate ),
-                Size = new Size( descriptionWidth, lineHeight ),
-                Text = taskDescription,
-                TabIndex = ++tabIndex
-            };
-            newTask.UI.TaskDescription.TextChanged +=
-                new EventHandler( Form.AnyInputChanges );
-
-            // Construct Task Time control
-            int taskTimeLeftCoordinate =
-                leftmostCoordinate + descriptionWidth + horizontalSpace;
-
-            newTask.UI.TaskTime = new TextBox
-            {
-                ReadOnly = true,
-                BackColor = Color.LightCoral,
-                ForeColor = Color.Black,
-                Location = new Point( taskTimeLeftCoordinate, topCoordinate ),
-                Size = new Size( timeWidth, lineHeight ),
-                TabIndex = ++tabIndex,
-                Text = "00:00:00",
-                TextAlign = HorizontalAlignment.Center
-            };
-
-            // Construct Task Button control
-            int buttonLeftCoordinate =
-                taskTimeLeftCoordinate + timeWidth + horizontalSpace;
-
-            newTask.UI.ToggleButton = new Button
-            {
-                Location = new Point( buttonLeftCoordinate, topCoordinate ),
-                Size = new Size( buttonWidth, lineHeight ),
-                TabIndex = ++tabIndex,
-                Text = "GO",
-                UseVisualStyleBackColor = true
-            };
-            newTask.UI.ToggleButton.Click +=
-                new EventHandler( Form.ToogleTimer_Click );
-
-            // Construct Remove Button control
-            int removeButtonLeftCoordinate =
-                buttonLeftCoordinate + buttonWidth + horizontalSpace;
-
-            newTask.UI.RemoveButton = new Button
-            {
-                Location = new Point( removeButtonLeftCoordinate, topCoordinate ),
-                Size = new Size( removeButtonWidth, lineHeight ),
-                TabIndex = ++tabIndex,
-                Text = "DEL",
-                UseVisualStyleBackColor = true
-            };
-            newTask.UI.RemoveButton.Click +=
-                new EventHandler( Form.RemoveTask_Click );
-
-            // Update Panel with inner contents
-            newTask.UI.AdjustPanel();
-
-            // Add new Task to the list
             Tasks.Add( newTask );
 
             // Update UI
@@ -297,18 +211,6 @@ namespace TEJ.TaskTimeTrackerApp
                 return 1;
 
             return Tasks.Last().TaskNumber + 1;
-        }
-
-        /// <summary>
-        /// Gets the current Tab Index.
-        /// </summary>
-        /// <returns>The current Tab Index.</returns>
-        private int GetCurrentTabIndex()
-        {
-            if ( Tasks == null || Tasks.Count == 0 )
-                return 0;
-
-            return Tasks.Last().UI.RemoveButton.TabIndex;
         }
 
         #endregion Helpers
