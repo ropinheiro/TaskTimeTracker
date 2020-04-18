@@ -14,20 +14,17 @@ namespace TEJ.TaskTimeTrackerApp
         /// </summary>
         private readonly TaskManager Manager;
 
-        /// <summary>
-        /// Try not to save too much in a short timespan.
-        /// TODO: move this to a constants file.
-        /// </summary>
-        private readonly int SecondsBetweenSavings = 5;
-        private int SecondsSinceLastSave = 0;
-
         public TaskTimeTracker()
         {
             InitializeComponent();
 
             Manager = new TaskManager( this );
             Manager.InitTasks();
+
+            tmrFileSaver.Start();
         }
+
+        #region Button handlers
 
         /// <summary>
         /// Executes when user clicks the Add Task button.
@@ -98,22 +95,31 @@ namespace TEJ.TaskTimeTrackerApp
             }
         }
 
+        #endregion Button handlers
+
+        #region Timer handlers
+
         /// <summary>
-        /// Executes when Timer ticks.
+        /// Executes when Task Timer ticks.
         /// </summary>
         /// <param name="sender">The Timer that ticked.</param>
         /// <param name="e">Event arguments (unused)</param>
         private void TaskTimerEventProcessor( object sender, EventArgs e )
         {
             Manager.AddSeconds( 1 );
-
-            SecondsSinceLastSave++;
-            if ( SecondsSinceLastSave > SecondsBetweenSavings )
-            {
-                SecondsSinceLastSave = 0;
-                FileManager.SaveData( Manager.Tasks );
-            }
         }
+
+        /// <summary>
+        /// Executes when File Saver Timer ticks.
+        /// </summary>
+        /// <param name="sender">The Timer that ticked.</param>
+        /// <param name="e">Event arguments (unused)</param>
+        private void FileSaverEventProcessor( object sender, EventArgs e )
+        {
+            FileManager.SaveData( Manager.Tasks );
+        }
+
+        #endregion Timer handlers
 
         /// <summary>
         /// Adjusts Add button and Form height according

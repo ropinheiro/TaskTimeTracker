@@ -33,6 +33,7 @@
             this.lblTime = new System.Windows.Forms.Label();
             this.tmrTaskTimer = new System.Windows.Forms.Timer(this.components);
             this.btnAddTask = new System.Windows.Forms.Button();
+            this.tmrFileSaver = new System.Windows.Forms.Timer(this.components);
             this.SuspendLayout();
             // 
             // lblTask
@@ -69,6 +70,11 @@
             this.btnAddTask.UseVisualStyleBackColor = true;
             this.btnAddTask.Click += new System.EventHandler(this.AddTask_Click);
             // 
+            // tmrFileSaver
+            // 
+            this.tmrFileSaver.Interval = 5000;
+            this.tmrFileSaver.Tick += new System.EventHandler(this.FileSaverEventProcessor);
+            // 
             // TaskTimeTracker
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 25F);
@@ -90,6 +96,7 @@
         private System.Windows.Forms.Label lblTime;
         private System.Windows.Forms.Timer tmrTaskTimer;
         private System.Windows.Forms.Button btnAddTask;
+        private System.Windows.Forms.Timer tmrFileSaver;
     }
 }
 
