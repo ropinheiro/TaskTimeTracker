@@ -8,20 +8,24 @@ Meanwhile, I thought it would be useful for someone else, so, here you have :)
 Current features:
 * Add / remove tasks
 * Start / stop timers associated to tasks
+* Save / load data
 
 Roadmap:
-* Save / load data
-* Archive / un-archive tasks
 * Log periodic time reports
+* Archive / un-archive tasks
 * Order tasks by drag-and-drop
 * Manuallt
 
 ## Current Release
 
-TODO - download link?
+This is still in development.
+
+But feel free to clone the repository and build it.
 
 
 ## Development Environment
 
-TODO - steps to mount the development environment to contribute
+For the development, you only need Visual Studio 2019 Preview.
+
+The project is a Windows Forms application with .NET Core 3.1.
 
