@@ -40,7 +40,7 @@ namespace TEJ.TaskTimeTrackerApp
 
         #endregion Controls
 
-        public TaskControl( int taskNumber, string taskDescription, TaskTimeTracker form )
+        public TaskControl( int taskNumber, string taskDescription, long timeSpentInSeconds, TaskTimeTracker form )
         {
             // TODO: move this somewhere (e.g. to constants?)
             int descriptionWidth = 450;
@@ -77,12 +77,12 @@ namespace TEJ.TaskTimeTrackerApp
             TaskTime = new TextBox
             {
                 ReadOnly = true,
-                BackColor = Color.LightCoral,
+                BackColor = timeSpentInSeconds == 0 ? Color.LightCoral : Color.Khaki,
                 ForeColor = Color.Black,
                 Location = new Point( taskTimeLeftCoordinate, 0 ),
                 Size = new Size( timeWidth, lineHeight ),
                 TabIndex = 1,
-                Text = GetFormattedTime( 0 ),
+                Text = GetFormattedTime( timeSpentInSeconds ),
                 TextAlign = HorizontalAlignment.Center
             };
 

@@ -42,13 +42,13 @@ namespace TEJ.TaskTimeTrackerApp
         #endregion Task fields
 
 
-        public Task( int number, string description, TaskTimeTracker form )
+        public Task( int number, string description, long timeSpentInSeconds, TaskTimeTracker form )
         {
             TaskNumber = number;
 
-            Tracker = new TaskTracker();
+            Tracker = new TaskTracker( timeSpentInSeconds );
 
-            UI = new TaskControl( number, description, form );
+            UI = new TaskControl( number, description, timeSpentInSeconds, form );
         }
 
         /// <summary>

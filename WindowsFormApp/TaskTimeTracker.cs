@@ -20,7 +20,7 @@ namespace TEJ.TaskTimeTrackerApp
             InitializeComponent();
 
             Manager = new TaskManager( this );
-            Manager.InitTasks();
+            Manager.LoadTasks();
 
             tmrFileSaver.Start();
         }
@@ -41,7 +41,7 @@ namespace TEJ.TaskTimeTrackerApp
             }
             else
             {
-                Manager.AddNewTask( string.Empty );
+                Manager.AddNewEmptyTask();
             }
         }
 

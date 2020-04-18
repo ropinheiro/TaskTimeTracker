@@ -7,19 +7,20 @@ namespace TEJ.TaskTimeTrackerApp
     /// </summary>
     public class TaskData
     {
-        public readonly int TaskNumber;
-        public readonly string TaskDescription;
-        public readonly long TimeSpentInSeconds;
+        public string TaskDescription { get; set; }
+
+        public long TimeSpentInSeconds { get; set; }
+
+        public TaskData() { /* Used when parsing from JSON */ }
 
         public TaskData( Task task )
         {
-            TaskNumber = task.TaskNumber;
             TaskDescription = task.UI.TaskDescription.Text;
             TimeSpentInSeconds = task.Tracker.TimeSpentInSeconds;
         }
 
         /// <summary>
-        /// Convert a Task list to an array of Task Data.
+        /// Converts a Task list to an array of Task Data.
         /// </summary>
         /// <param name="tasks">A given Task list.</param>
         /// <returns>An array of Task Data.</returns>

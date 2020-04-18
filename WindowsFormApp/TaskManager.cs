@@ -33,33 +33,38 @@ namespace TEJ.TaskTimeTrackerApp
             Form = form;
         }
 
-        public void InitTasks()
+        /// <summary>
+        /// Load previous tasks stored in a file.
+        /// </summary>
+        public void LoadTasks()
         {
-            // Intialize app with some tasks
-            // TODO: should load them from the disk.
-            List<string> taskDescriptions = new List<string>
-            {
-                "Task 1",
-                "Task 2",
-                "Task 3",
-                "Task 4",
-                "Task 5",
-            };
+            List<TaskData> rawData = FileManager.LoadData();
 
-            foreach ( string description in taskDescriptions )
-                AddNewTask( description );
+            foreach ( TaskData data in rawData )
+            {
+                AddNewTask( data.TaskDescription, data.TimeSpentInSeconds );
+            }
         }
 
         #region Add / Remove Tasks
 
         /// <summary>
+        /// Adds a new empty task, without description nor elapsed time.
+        /// </summary>
+        public void AddNewEmptyTask()
+        {
+            AddNewTask( string.Empty, 0 );
+        }
+
+        /// <summary>
         /// Adds a new Task with a given description to the end of the list.
         /// </summary>
         /// <param name="taskDescription">A given Task descripiton</param>
-        public void AddNewTask( string taskDescription )
+        /// <param name="timeSpentInSeconds">A given Time spent in seconds</param>
+        public void AddNewTask( string taskDescription, long timeSpentInSeconds )
         {
             Task newTask =
-                new Task( GetNextTaskNumber(), taskDescription, Form );
+                new Task( GetNextTaskNumber(), taskDescription, timeSpentInSeconds, Form );
 
             Tasks.Add( newTask );
 

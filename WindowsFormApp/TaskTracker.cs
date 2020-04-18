@@ -16,6 +16,11 @@
             TimeSpentInSeconds = 0;
         }
 
+        public TaskTracker( long timeSpentInSeconds )
+        {
+            TimeSpentInSeconds = timeSpentInSeconds;
+        }
+
         /// <summary>
         /// Adds a given amount of seconds to this Task's time spent.
         /// </summary>
