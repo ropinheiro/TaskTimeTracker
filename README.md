@@ -14,7 +14,13 @@ Roadmap:
 * Log periodic time reports
 * Archive / un-archive tasks
 * Order tasks by drag-and-drop
-* Manuallt
+* Manually adjust the time
+
+Extra things you can do by editing TaskData.json (with the application closed!):
+* Edit the elapsed times
+* Change the order of the tasks
+
+When the application is opened, it loads this file. The tasks will be rendered in the order they appear in the file and all descriptions and elapsed times (in seconds) will be filled. All tasks load in stopped status.
 
 ## Current Release
 
