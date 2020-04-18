@@ -94,6 +94,8 @@ namespace TEJ.TaskTimeTrackerApp
                 Text = taskDescription,
                 TabIndex = ++tabIndex
             };
+            newTask.UI.TaskDescription.TextChanged +=
+                new EventHandler( Form.AnyInputChanges );
 
             // Construct Task Time control
             int taskTimeLeftCoordinate =

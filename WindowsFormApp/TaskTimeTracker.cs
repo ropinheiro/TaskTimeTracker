@@ -14,6 +14,8 @@ namespace TEJ.TaskTimeTrackerApp
         /// </summary>
         private readonly TaskManager Manager;
 
+        public bool DataIsDirty = false;
+
         public TaskTimeTracker()
         {
             InitializeComponent();
@@ -116,10 +118,40 @@ namespace TEJ.TaskTimeTrackerApp
         /// <param name="e">Event arguments (unused)</param>
         private void FileSaverEventProcessor( object sender, EventArgs e )
         {
+            // Always save file if Task Timer is enabled.
+            bool saveFile = tmrTaskTimer.Enabled;
+
+            // If it is not enabled... save file if actual data is "dirty".
+            if ( !saveFile && DataIsDirty )
+                saveFile = true;
+
+            if ( saveFile )
+            {
+                SaveFile();
+            }
+        }
+
+        /// <summary>
+        /// Execute a File saving
+        /// </summary>
+        private void SaveFile()
+        {
+            DataIsDirty = false;
             FileManager.SaveData( Manager.Tasks );
         }
 
         #endregion Timer handlers
+
+        /// <summary>
+        /// Executes when any user input changes.
+        /// </summary>
+        /// <param name="sender">The input control that changed.</param>
+        /// <param name="e">Event arguments (unused)</param>
+        public void AnyInputChanges( object sender, EventArgs e )
+        {
+            DataIsDirty = true;
+        }
+
 
         /// <summary>
         /// Adjusts Add button and Form height according
