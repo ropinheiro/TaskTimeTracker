@@ -15,10 +15,33 @@
         /// </summary>
         public TaskTracker Tracker;
 
+        #region Task fields
+
+        /// <summary>
+        /// The Task's number (used like a unique identifier).
+        /// </summary>
+        public int TaskNumber
+        {
+            get
+            {
+                return _TaskNumber;
+            }
+            set
+            {
+                _TaskNumber = value;
+                // TODO: update the Task Panel's position accordingly
+            }
+        }
+        private int _TaskNumber;
+
+        #endregion Task fields
+
+
         public Task( int taskNumber )
         {
+            TaskNumber = taskNumber;
+            Tracker = new TaskTracker();
             UI = new TaskControl();
-            Tracker = new TaskTracker( taskNumber );
         }
 
         /// <summary>
@@ -40,7 +63,7 @@
         /// <returns>A string that describes the Task.</returns>
         public override string ToString()
         {
-            return $"Task {Tracker.TaskNumber} | {UI.TaskDescription.Text}";
+            return $"Task {TaskNumber} | {UI.TaskDescription.Text}";
         }
     }
 }

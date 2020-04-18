@@ -75,7 +75,7 @@ namespace TEJ.TaskTimeTrackerApp
 
             // Construct Panel control
             int topCoordinate = topmostCoordinate +
-                ( ( newTask.Tracker.TaskNumber - 1 ) * ( lineHeight + verticalSpace ) );
+                ( ( newTask.TaskNumber - 1 ) * ( lineHeight + verticalSpace ) );
 
             newTask.UI.TaskPanel = new Panel
             {
@@ -162,9 +162,9 @@ namespace TEJ.TaskTimeTrackerApp
         {
             // Adjust positions of all tasks coming after the
             // task to be removed (move them up one position).
-            for ( int i = Tasks.Count - 1; i > taskToRemove.Tracker.TaskNumber - 1; i-- )
+            for ( int i = Tasks.Count - 1; i > taskToRemove.TaskNumber - 1; i-- )
             {
-                Tasks[ i ].Tracker.TaskNumber = Tasks[ i - 1 ].Tracker.TaskNumber;
+                Tasks[ i ].TaskNumber = Tasks[ i - 1 ].TaskNumber;
                 Tasks[ i ].UI.TaskPanel.Location =
                     Tasks[ i - 1 ].UI.TaskPanel.Location;
             }
@@ -296,7 +296,7 @@ namespace TEJ.TaskTimeTrackerApp
             if ( Tasks == null || Tasks.Count == 0 )
                 return 1;
 
-            return Tasks.Last().Tracker.TaskNumber + 1;
+            return Tasks.Last().TaskNumber + 1;
         }
 
         /// <summary>

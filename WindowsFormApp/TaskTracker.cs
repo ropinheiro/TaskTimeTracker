@@ -7,19 +7,13 @@
     public class TaskTracker
     {
         /// <summary>
-        /// The Task's number (used like a unique identifier).
-        /// </summary>
-        public int TaskNumber;
-
-        /// <summary>
         /// Amount of time spent so far, in seconds.
         /// </summary>
         public long TimeSpentInSeconds;
 
-        public TaskTracker( int taskNumber )
+        public TaskTracker()
         {
             TimeSpentInSeconds = 0;
-            TaskNumber = taskNumber;
         }
 
         /// <summary>

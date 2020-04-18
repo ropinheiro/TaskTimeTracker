@@ -13,7 +13,7 @@ namespace TEJ.TaskTimeTrackerApp
 
         public TaskData( Task task )
         {
-            TaskNumber = task.Tracker.TaskNumber;
+            TaskNumber = task.TaskNumber;
             TaskDescription = task.UI.TaskDescription.Text;
             TimeSpentInSeconds = task.Tracker.TimeSpentInSeconds;
         }
