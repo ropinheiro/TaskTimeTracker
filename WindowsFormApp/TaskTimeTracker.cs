@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 
@@ -78,7 +77,7 @@ namespace TEJ.TaskTimeTrackerApp
 
             if ( tmrTaskTimer.Enabled )
             {
-                Manager.CurrentTask.UI.TaskTime.BackColor = Color.Khaki;
+                Manager.CurrentTask.TimerStopped();
 
                 if ( Manager.ButtonBelongsToTheCurrentTask( clickedButton ) )
                 {
@@ -111,7 +110,7 @@ namespace TEJ.TaskTimeTrackerApp
         /// <param name="e">Event arguments (unused)</param>
         private void TaskTimerEventProcessor( object sender, EventArgs e )
         {
-            Manager.AddSeconds( 1 );
+            Manager.CurrentTask.UpdateTimeLabel();
         }
 
         /// <summary>
@@ -154,7 +153,6 @@ namespace TEJ.TaskTimeTrackerApp
         {
             DataIsDirty = true;
         }
-
 
         /// <summary>
         /// Adjusts Add button and Form height according

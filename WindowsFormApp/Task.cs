@@ -1,6 +1,4 @@
-﻿using System.Reflection.Metadata.Ecma335;
-
-namespace TEJ.TaskTimeTrackerApp
+﻿namespace TEJ.TaskTimeTrackerApp
 {
     /// <summary>
     /// Abstractly describes a Task.
@@ -41,7 +39,6 @@ namespace TEJ.TaskTimeTrackerApp
 
         #endregion Task fields
 
-
         public Task( int number, string description, long timeSpentInSeconds, TaskTimeTracker form )
         {
             TaskNumber = number;
@@ -52,16 +49,29 @@ namespace TEJ.TaskTimeTrackerApp
         }
 
         /// <summary>
-        /// Adds a given amount of seconds to this Task's time spent
-        /// and updates the UI accordingly.
+        /// Updates the UI with the current task's time spent.
         /// </summary>
-        /// <param name="seconds">A given amount of seconds.</param>
-        public void AddSeconds( int seconds )
+        public void UpdateTimeLabel()
         {
-            long timeSpentInSeconds =
-                Tracker.AddSeconds( seconds );
+            UI.UpdateTimeLabel( Tracker.TotalTimeSpentInSeconds );
+        }
 
-            UI.UpdateTimeLabel( timeSpentInSeconds );
+        /// <summary>
+        /// React to the timer being started for this task.
+        /// </summary>
+        public void TimerStarted()
+        {
+            UI.TimerStarted();
+            Tracker.TimerStarted();
+        }
+
+        /// <summary>
+        /// React to the timer being stopped for this task.
+        /// </summary>
+        public void TimerStopped()
+        {
+            UI.TimerStopped();
+            Tracker.TimerStopped();
         }
 
         /// <summary>

@@ -1,4 +1,6 @@
-﻿namespace TEJ.TaskTimeTrackerApp
+﻿using System;
+
+namespace TEJ.TaskTimeTrackerApp
 {
     /// <summary>
     /// The part responsible for the Task's tracking logic.
@@ -7,30 +9,68 @@
     public class TaskTracker
     {
         /// <summary>
-        /// Amount of time spent so far, in seconds.
+        /// Date when this task started to be tracked.
         /// </summary>
-        public long TimeSpentInSeconds;
+        public DateTime? DateSinceLastStart { get; set; }
+
+        /// <summary>
+        /// Amount of time in seconds spent in previous start-stop cycles
+        /// of the timer. It should be added to the current iteration (if
+        /// timer is enabled for this task) to get the total spent time.
+        /// </summary>
+        public long TimePreviouslySpentInSeconds { get; set; }
+
+        /// <summary>
+        /// Amount of time in seconds spent in current start-stop cycle
+        /// of the timer. Will be zero if timer is stopped.
+        /// </summary>
+        public long CurrentTimeSpentInSeconds
+        {
+            get
+            {
+                if ( !DateSinceLastStart.HasValue )
+                    return 0;
+
+                return (long)( DateTime.Now - DateSinceLastStart.Value ).TotalSeconds;
+            }
+        }
+
+        /// <summary>
+        /// Cumulative amount of time spent so far, in seconds.
+        /// </summary>
+        public long TotalTimeSpentInSeconds
+        {
+            get
+            {
+                return TimePreviouslySpentInSeconds + CurrentTimeSpentInSeconds;
+            }
+        }
 
         public TaskTracker()
         {
-            TimeSpentInSeconds = 0;
+            TimePreviouslySpentInSeconds = 0;
         }
 
         public TaskTracker( long timeSpentInSeconds )
         {
-            TimeSpentInSeconds = timeSpentInSeconds;
+            TimePreviouslySpentInSeconds = timeSpentInSeconds;
         }
 
         /// <summary>
-        /// Adds a given amount of seconds to this Task's time spent.
+        /// React to the timer being started for this task.
         /// </summary>
-        /// <param name="seconds">A given amount of seconds.</param>
-        /// <returns></returns>
-        public long AddSeconds( int seconds )
+        public void TimerStarted()
         {
-            TimeSpentInSeconds += seconds;
+            DateSinceLastStart = DateTime.Now;
+        }
 
-            return TimeSpentInSeconds;
+        /// <summary>
+        /// React to the timer being stopped for this task.
+        /// </summary>
+        public void TimerStopped()
+        {
+            TimePreviouslySpentInSeconds += CurrentTimeSpentInSeconds;
+            DateSinceLastStart = null;
         }
     }
 }

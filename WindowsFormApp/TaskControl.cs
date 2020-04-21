@@ -187,5 +187,22 @@ namespace TEJ.TaskTimeTrackerApp
             TaskPanel.Location = new Point( leftmostCoordinate, topCoordinate );
             TaskPanel.TabIndex = taskNumber;
         }
+
+        /// <summary>
+        /// React to the timer being started for this task.
+        /// </summary>
+        public void TimerStarted()
+        {
+            TaskTime.BackColor = Color.LawnGreen;
+        }
+
+        /// <summary>
+        /// React to the timer being stopped for this task.
+        /// </summary>
+        public void TimerStopped()
+        {
+            TaskTime.BackColor = Color.Khaki;
+        }
+
     }
 }

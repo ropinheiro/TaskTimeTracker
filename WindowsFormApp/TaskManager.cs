@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 
@@ -185,16 +184,7 @@ namespace TEJ.TaskTimeTrackerApp
         public void SetCurrentTaskByClickedButton( Button clickedButton )
         {
             CurrentTask = GetTaskByClickedButton( clickedButton );
-            CurrentTask.UI.TaskTime.BackColor = Color.LawnGreen;
-        }
-
-        /// <summary>
-        /// Adds the given number of seconds to the Current Task
-        /// </summary>
-        /// <param name="seconds">A given number of seconds</param>
-        public void AddSeconds( int seconds )
-        {
-            CurrentTask.AddSeconds( seconds );
+            CurrentTask.TimerStarted();
         }
 
         public bool HasTooManyTasks()
