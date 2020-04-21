@@ -144,6 +144,8 @@ namespace TEJ.TaskTimeTrackerApp
 
         #endregion Timer handlers
 
+        #region TextBox handlers
+
         /// <summary>
         /// Executes when any user input changes.
         /// </summary>
@@ -153,6 +155,21 @@ namespace TEJ.TaskTimeTrackerApp
         {
             DataIsDirty = true;
         }
+
+        /// <summary>
+        /// Executes when the user changes a time input.
+        /// </summary>
+        /// <param name="sender">The input control that changed.</param>
+        /// <param name="e">Event arguments (unused)</param>
+        public void UserChangedTime( object sender, EventArgs e )
+        {
+            Task taskToUpdate =
+                Manager.GetTaskByChangedInput( (TextBox)sender );
+
+            taskToUpdate.UpdateTimeTo( ( (TextBox)sender ).Text );
+        }
+
+        #endregion TextBox handlers
 
         /// <summary>
         /// Adjusts Add button and Form height according

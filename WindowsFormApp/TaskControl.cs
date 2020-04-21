@@ -76,7 +76,7 @@ namespace TEJ.TaskTimeTrackerApp
 
             TaskTime = new TextBox
             {
-                ReadOnly = true,
+                ReadOnly = false,
                 BackColor = timeSpentInSeconds == 0 ? Color.LightCoral : Color.Khaki,
                 ForeColor = Color.Black,
                 Location = new Point( taskTimeLeftCoordinate, 0 ),
@@ -85,6 +85,10 @@ namespace TEJ.TaskTimeTrackerApp
                 Text = GetFormattedTime( timeSpentInSeconds ),
                 TextAlign = HorizontalAlignment.Center
             };
+            TaskTime.LostFocus +=
+                new EventHandler( form.AnyInputChanges );
+            TaskTime.LostFocus +=
+                new EventHandler( form.UserChangedTime );
 
             // ----------------------------------------------------------------
             // Construct Task Button control
@@ -194,6 +198,7 @@ namespace TEJ.TaskTimeTrackerApp
         public void TimerStarted()
         {
             TaskTime.BackColor = Color.LawnGreen;
+            TaskTime.ReadOnly = true;
         }
 
         /// <summary>
@@ -202,6 +207,7 @@ namespace TEJ.TaskTimeTrackerApp
         public void TimerStopped()
         {
             TaskTime.BackColor = Color.Khaki;
+            TaskTime.ReadOnly = false;
         }
 
     }

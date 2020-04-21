@@ -162,7 +162,7 @@ namespace TEJ.TaskTimeTrackerApp
         /// </summary>
         /// <param name="clickedButton">A given clicked Button.</param>
         /// <returns>A Task.</returns>
-        /// <exception cref="System.Exception">Throw when no Task is found.</exception>
+        /// <exception cref="Exception">Throw when no Task is found.</exception>
         public Task GetTaskByClickedButton( Button clickedButton )
         {
             foreach ( Task task in Tasks )
@@ -175,6 +175,26 @@ namespace TEJ.TaskTimeTrackerApp
             }
 
             throw new Exception( "This button is not associated to a Task!" );
+        }
+
+        /// <summary>
+        /// Finds the Task to which the given changed Text Box belongs.
+        /// </summary>
+        /// <param name="changedInput">A given changed Text Box.</param>
+        /// <returns>A Task.</returns>
+        /// <exception cref="Exception">Throw when no Task is found.</exception>
+        public Task GetTaskByChangedInput( TextBox changedInput )
+        {
+            foreach ( Task task in Tasks )
+            {
+                if ( changedInput == task.UI.TaskTime
+                    || changedInput == task.UI.TaskDescription )
+                {
+                    return task;
+                }
+            }
+
+            throw new Exception( "This input is not associated to a Task!" );
         }
 
         /// <summary>
