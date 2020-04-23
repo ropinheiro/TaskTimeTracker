@@ -61,7 +61,7 @@ namespace TEJ.TaskTimeTrackerApp
         /// </summary>
         public void UpdateTimeInput()
         {
-            UI.UpdateTimeLabel( Tracker.TotalTimeSpentInSeconds );
+            UI.UpdateTimeInput( Tracker.TotalTimeSpentInSeconds, IsTrackingTime );
         }
 
         /// <summary>

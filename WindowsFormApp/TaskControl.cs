@@ -131,11 +131,31 @@ namespace TEJ.TaskTimeTrackerApp
         }
 
         /// <summary>
-        /// Updates the Task's time label according to the given time spent in seconds.
+        /// Updates the Task's time input according to a given elapsed time.
+        /// If time is being tracked, it will be readonly and green.
+        /// If time is not being tracked, it will be editable and red if zero
+        /// time so far, or yellow if some time was already elapsed.
         /// </summary>
         /// <param name="timeSpentInSeconds">A given amount of time spent in seconds.</param>
-        public void UpdateTimeLabel( long timeSpentInSeconds )
+        /// <param name="isTrackingTime">True if Task is being tracked, false otherwise - affects color.</param>
+        public void UpdateTimeInput( long timeSpentInSeconds, bool isTrackingTime )
         {
+            if ( isTrackingTime )
+            {
+                TaskTime.ReadOnly = true;
+                
+                TaskTime.BackColor = Color.LawnGreen;
+            }
+            else
+            {
+                TaskTime.ReadOnly = false;
+
+                if ( timeSpentInSeconds == 0 )
+                    TaskTime.BackColor = Color.LightCoral;
+                else
+                    TaskTime.BackColor = Color.Khaki;
+            }
+
             TaskTime.Text = GetFormattedTime( timeSpentInSeconds );
         }
 
@@ -149,6 +169,19 @@ namespace TEJ.TaskTimeTrackerApp
                 .FromSeconds( timeSpentInSeconds );
 
             return time.ToString( @"hh\:mm\:ss" );
+        }
+
+        /// <summary>
+        /// Get the number of seconds from the formatted time.
+        /// </summary>
+        /// <returns>A number of seconds.</returns>
+        private int GetSecondsFromFormattedTime()
+        {
+            string[] splittedTime = TaskTime.Text.Split( ':' );
+
+            return int.Parse( splittedTime[ 0 ] ) * 60 * 60
+                + int.Parse( splittedTime[ 1 ] ) * 60
+                + int.Parse( splittedTime[ 2 ] );
         }
 
         /// <summary>
@@ -197,8 +230,7 @@ namespace TEJ.TaskTimeTrackerApp
         /// </summary>
         public void TimerStarted()
         {
-            TaskTime.BackColor = Color.LawnGreen;
-            TaskTime.ReadOnly = true;
+            UpdateTimeInput( GetSecondsFromFormattedTime(), true );
         }
 
         /// <summary>
@@ -206,8 +238,7 @@ namespace TEJ.TaskTimeTrackerApp
         /// </summary>
         public void TimerStopped()
         {
-            TaskTime.BackColor = Color.Khaki;
-            TaskTime.ReadOnly = false;
+            UpdateTimeInput( GetSecondsFromFormattedTime(), false );
         }
 
     }
