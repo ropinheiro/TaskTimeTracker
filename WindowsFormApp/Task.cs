@@ -59,7 +59,7 @@ namespace TEJ.TaskTimeTrackerApp
         /// <summary>
         /// Updates the UI with the current task's time spent.
         /// </summary>
-        public void UpdateTimeLabel()
+        public void UpdateTimeInput()
         {
             UI.UpdateTimeLabel( Tracker.TotalTimeSpentInSeconds );
         }
@@ -91,10 +91,10 @@ namespace TEJ.TaskTimeTrackerApp
                     "Invalid time format!" );
             }
 
-            // No matter what happens, always update the label so that
+            // No matter what happens, always update the Time input so that
             // either the new (if valid) value is wrote, or the previous
             // value (when the new is invalid) is restored.
-            UpdateTimeLabel();
+            UpdateTimeInput();
         }
 
         /// <summary>

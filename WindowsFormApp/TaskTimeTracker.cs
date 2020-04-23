@@ -110,7 +110,7 @@ namespace TEJ.TaskTimeTrackerApp
         /// <param name="e">Event arguments (unused)</param>
         private void TaskTimerEventProcessor( object sender, EventArgs e )
         {
-            Manager.CurrentTask.UpdateTimeLabel();
+            Manager.CurrentTask.UpdateTimeInput();
         }
 
         /// <summary>
