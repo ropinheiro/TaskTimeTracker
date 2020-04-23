@@ -40,6 +40,11 @@ namespace TEJ.TaskTimeTrackerApp
         }
         private int _TaskNumber;
 
+        /// <summary>
+        /// Tells if tiem is being tracked for this Task, or not.
+        /// </summary>
+        private bool IsTrackingTime = false;
+
         #endregion Task fields
 
         public Task( int number, string description, long timeSpentInSeconds, TaskTimeTracker form )
@@ -147,6 +152,7 @@ namespace TEJ.TaskTimeTrackerApp
         /// </summary>
         public void TimerStarted()
         {
+            IsTrackingTime = true;
             UI.TimerStarted();
             Tracker.TimerStarted();
         }
@@ -156,6 +162,7 @@ namespace TEJ.TaskTimeTrackerApp
         /// </summary>
         public void TimerStopped()
         {
+            IsTrackingTime = false;
             UI.TimerStopped();
             Tracker.TimerStopped();
         }
