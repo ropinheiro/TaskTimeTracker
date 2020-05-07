@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(TaskTimeTracker));
             this.lblTask = new System.Windows.Forms.Label();
             this.lblTime = new System.Windows.Forms.Label();
             this.tmrTaskTimer = new System.Windows.Forms.Timer(this.components);
@@ -83,6 +84,7 @@
             this.Controls.Add(this.btnAddTask);
             this.Controls.Add(this.lblTime);
             this.Controls.Add(this.lblTask);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "TaskTimeTracker";
             this.Text = "Task Time Tracker @ Estamos Juntos 2020 - RMP";
             this.ResumeLayout(false);

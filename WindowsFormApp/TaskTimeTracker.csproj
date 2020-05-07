@@ -4,10 +4,28 @@
     <OutputType>WinExe</OutputType>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <UseWindowsForms>true</UseWindowsForms>
+    <Version>0.2.2</Version>
+    <Authors>RMP</Authors>
+    <Company>Together - Estamos Juntos, LDA</Company>
+    <Product>Task Time Tracker</Product>
+    <Copyright>Freeware</Copyright>
+    <PackageProjectUrl>https://github.com/ropinheiro/TaskTimeTracker</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/ropinheiro/TaskTimeTracker.git</RepositoryUrl>
+    <RepositoryType>Git</RepositoryType>
+    <PackageIcon>Logo.ico</PackageIcon>
+    <ApplicationIcon>Logo.ico</ApplicationIcon>
+    <StartupObject>TEJ.TaskTimeTrackerApp.Program</StartupObject>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="Logo.ico">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
   </ItemGroup>
 
 </Project>
