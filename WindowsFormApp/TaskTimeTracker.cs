@@ -166,7 +166,8 @@ namespace TEJ.TaskTimeTrackerApp
             Task taskToUpdate =
                 Manager.GetTaskByChangedInput( (TextBox)sender );
 
-            taskToUpdate.UpdateTimeTo( ( (TextBox)sender ).Text );
+            if ( Manager.CurrentTask != taskToUpdate )
+                taskToUpdate.UpdateTimeTo( ( (TextBox)sender ).Text );
         }
 
         #endregion TextBox handlers
